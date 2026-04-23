@@ -2,7 +2,7 @@
   "name": "Reaction",
   "type": "object",
   "properties": {
-    "update_id": {
+    "post_id": {
       "type": "string"
     },
     "user_id": {
@@ -11,14 +11,15 @@
     "reaction_type": {
       "type": "string",
       "enum": [
+        "like",
         "accurate",
-        "still_true",
-        "not_accurate"
+        "outdated",
+        "wow"
       ]
     }
   },
   "required": [
-    "update_id",
+    "post_id",
     "user_id",
     "reaction_type"
   ]

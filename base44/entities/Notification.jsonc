@@ -1,0 +1,44 @@
+{
+  "name": "Notification",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "like",
+        "comment",
+        "follow",
+        "mention",
+        "accurate",
+        "new_update"
+      ]
+    },
+    "actor_id": {
+      "type": "string"
+    },
+    "actor_name": {
+      "type": "string"
+    },
+    "post_id": {
+      "type": "string"
+    },
+    "comment_id": {
+      "type": "string"
+    },
+    "read": {
+      "type": "boolean",
+      "default": false
+    },
+    "message": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "type",
+    "actor_id"
+  ]
+}
