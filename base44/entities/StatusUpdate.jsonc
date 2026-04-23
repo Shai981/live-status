@@ -2,139 +2,64 @@
   "name": "StatusUpdate",
   "type": "object",
   "properties": {
-    "user_id": {
-      "type": "string"
-    },
-    "user_name": {
-      "type": "string"
-    },
-    "location_id": {
+    "nickname": {
       "type": "string"
     },
     "location_name": {
       "type": "string"
     },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
     "category": {
       "type": "string",
       "enum": [
-        "traffic",
         "supermarket",
         "beach",
+        "traffic",
         "parking",
-        "public_place",
         "restaurant",
         "clinic",
+        "transport",
+        "park",
         "other"
       ]
     },
-    "title": {
-      "type": "string"
+    "status_level": {
+      "type": "string",
+      "enum": [
+        "Good",
+        "Moderate",
+        "Bad"
+      ]
     },
     "description": {
       "type": "string"
-    },
-    "structured_data": {
-      "type": "object",
-      "description": "Category-specific structured fields",
-      "properties": {
-        "crowd_level": {
-          "type": "string",
-          "enum": [
-            "empty",
-            "light",
-            "moderate",
-            "busy",
-            "packed"
-          ]
-        },
-        "wait_minutes": {
-          "type": "number"
-        },
-        "congestion_level": {
-          "type": "string",
-          "enum": [
-            "clear",
-            "light",
-            "moderate",
-            "heavy",
-            "standstill"
-          ]
-        },
-        "has_accident": {
-          "type": "boolean"
-        },
-        "road_speed_kmh": {
-          "type": "number"
-        },
-        "wave_height_m": {
-          "type": "number"
-        },
-        "water_quality": {
-          "type": "string",
-          "enum": [
-            "excellent",
-            "good",
-            "fair",
-            "poor"
-          ]
-        },
-        "wind_level": {
-          "type": "string",
-          "enum": [
-            "calm",
-            "light",
-            "moderate",
-            "strong",
-            "dangerous"
-          ]
-        },
-        "parking_availability": {
-          "type": "string",
-          "enum": [
-            "available",
-            "limited",
-            "full"
-          ]
-        }
-      }
-    },
-    "photo_url": {
-      "type": "string"
-    },
-    "accuracy_score": {
-      "type": "number",
-      "default": 0
     },
     "confirm_count": {
       "type": "number",
       "default": 0
     },
-    "deny_count": {
+    "downvote_count": {
       "type": "number",
       "default": 0
+    },
+    "language_code": {
+      "type": "string"
     },
     "report_count": {
       "type": "number",
       "default": 0
-    },
-    "status_visibility": {
-      "type": "string",
-      "enum": [
-        "visible",
-        "hidden",
-        "flagged"
-      ],
-      "default": "visible"
-    },
-    "expires_at": {
-      "type": "string",
-      "format": "date-time"
     }
   },
   "required": [
-    "location_id",
+    "nickname",
+    "location_name",
     "category",
-    "title",
+    "status_level",
     "description"
   ]
 }
