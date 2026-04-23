@@ -1,0 +1,19 @@
+{
+  "name": "Favorite",
+  "type": "object",
+  "properties": {
+    "user_id": {
+      "type": "string"
+    },
+    "location_id": {
+      "type": "string"
+    },
+    "location_name": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "user_id",
+    "location_id"
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "name": "Report",
+  "type": "object",
+  "properties": {
+    "update_id": {
+      "type": "string"
+    },
+    "reported_by": {
+      "type": "string"
+    },
+    "reason": {
+      "type": "string",
+      "enum": [
+        "spam",
+        "false_info",
+        "inappropriate",
+        "offensive",
+        "other"
+      ]
+    },
+    "details": {
+      "type": "string"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "pending",
+        "reviewed",
+        "dismissed",
+        "actioned"
+      ],
+      "default": "pending"
+    }
+  },
+  "required": [
+    "update_id",
+    "reported_by",
+    "reason"
+  ]
+}

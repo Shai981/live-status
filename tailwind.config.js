@@ -4,6 +4,9 @@ module.exports = {
     content: ["./index.html", "./src/**/*.{ts,tsx,js,jsx}"],
   theme: {
   	extend: {
+      fontFamily: {
+        inter: ['Inter', 'sans-serif'],
+      },
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
@@ -50,40 +53,58 @@ module.exports = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			},
+        category: {
+          traffic: 'hsl(var(--category-traffic))',
+          supermarket: 'hsl(var(--category-supermarket))',
+          beach: 'hsl(var(--category-beach))',
+          parking: 'hsl(var(--category-parking))',
+          public: 'hsl(var(--category-public))',
+          restaurant: 'hsl(var(--category-restaurant))',
+          clinic: 'hsl(var(--category-clinic))',
+          other: 'hsl(var(--category-other))',
+        },
   			sidebar: {
-  				DEFAULT: 'hsl(var(--sidebar-background))',
-  				foreground: 'hsl(var(--sidebar-foreground))',
-  				primary: 'hsl(var(--sidebar-primary))',
-  				'primary-foreground': 'hsl(var(--sidebar-primary-foreground))',
-  				accent: 'hsl(var(--sidebar-accent))',
-  				'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
-  				border: 'hsl(var(--sidebar-border))',
-  				ring: 'hsl(var(--sidebar-ring))'
+  				DEFAULT: 'hsl(var(--background))',
+  				foreground: 'hsl(var(--foreground))',
+  				primary: 'hsl(var(--primary))',
+  				'primary-foreground': 'hsl(var(--primary-foreground))',
+  				accent: 'hsl(var(--muted))',
+  				'accent-foreground': 'hsl(var(--muted-foreground))',
+  				border: 'hsl(var(--border))',
+  				ring: 'hsl(var(--ring))'
   			}
   		},
   		keyframes: {
   			'accordion-down': {
-  				from: {
-  					height: '0'
-  				},
-  				to: {
-  					height: 'var(--radix-accordion-content-height)'
-  				}
+  				from: { height: '0' },
+  				to: { height: 'var(--radix-accordion-content-height)' }
   			},
   			'accordion-up': {
-  				from: {
-  					height: 'var(--radix-accordion-content-height)'
-  				},
-  				to: {
-  					height: '0'
-  				}
-  			}
+  				from: { height: 'var(--radix-accordion-content-height)' },
+  				to: { height: '0' }
+  			},
+        'pulse-dot': {
+          '0%, 100%': { opacity: 1 },
+          '50%': { opacity: 0.4 },
+        }
   		},
   		animation: {
   			'accordion-down': 'accordion-down 0.2s ease-out',
-  			'accordion-up': 'accordion-up 0.2s ease-out'
+  			'accordion-up': 'accordion-up 0.2s ease-out',
+        'pulse-dot': 'pulse-dot 1.5s ease-in-out infinite',
   		}
   	}
   },
+  safelist: [
+    'bg-category-traffic', 'bg-category-supermarket', 'bg-category-beach',
+    'bg-category-parking', 'bg-category-public', 'bg-category-restaurant',
+    'bg-category-clinic', 'bg-category-other',
+    'text-category-traffic', 'text-category-supermarket', 'text-category-beach',
+    'text-category-parking', 'text-category-public', 'text-category-restaurant',
+    'text-category-clinic', 'text-category-other',
+    'border-category-traffic', 'border-category-supermarket', 'border-category-beach',
+    'border-category-parking', 'border-category-public', 'border-category-restaurant',
+    'border-category-clinic', 'border-category-other',
+  ],
   plugins: [require("tailwindcss-animate")],
 }

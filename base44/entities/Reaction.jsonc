@@ -1,0 +1,25 @@
+{
+  "name": "Reaction",
+  "type": "object",
+  "properties": {
+    "update_id": {
+      "type": "string"
+    },
+    "user_id": {
+      "type": "string"
+    },
+    "reaction_type": {
+      "type": "string",
+      "enum": [
+        "accurate",
+        "still_true",
+        "not_accurate"
+      ]
+    }
+  },
+  "required": [
+    "update_id",
+    "user_id",
+    "reaction_type"
+  ]
+}

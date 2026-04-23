@@ -1,0 +1,50 @@
+{
+  "name": "Location",
+  "type": "object",
+  "properties": {
+    "name": {
+      "type": "string",
+      "description": "Place name"
+    },
+    "category": {
+      "type": "string",
+      "enum": [
+        "traffic",
+        "supermarket",
+        "beach",
+        "parking",
+        "public_place",
+        "restaurant",
+        "clinic",
+        "other"
+      ],
+      "description": "Category of location"
+    },
+    "address": {
+      "type": "string"
+    },
+    "city": {
+      "type": "string"
+    },
+    "country": {
+      "type": "string"
+    },
+    "latitude": {
+      "type": "number"
+    },
+    "longitude": {
+      "type": "number"
+    },
+    "place_description": {
+      "type": "string"
+    },
+    "update_count": {
+      "type": "number",
+      "default": 0
+    }
+  },
+  "required": [
+    "name",
+    "category"
+  ]
+}
