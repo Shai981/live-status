@@ -14,6 +14,7 @@ import AddUpdate from '@/pages/AddUpdate';
 import LocationDetails from '@/pages/LocationDetails';
 import UserProfile from '@/pages/UserProfile';
 import AdminDashboard from '@/pages/AdminDashboard';
+import ExportCode from '@/pages/ExportCode';
 
 const AuthenticatedApp = () => {
   const { isLoadingAuth, isLoadingPublicSettings, authError, navigateToLogin } = useAuth();
@@ -47,6 +48,7 @@ const AuthenticatedApp = () => {
         <Route path="/location/:id" element={<LocationDetails />} />
         <Route path="/profile" element={<UserProfile />} />
         <Route path="/admin" element={<AdminDashboard />} />
+        <Route path="/export" element={<ExportCode />} />
       </Route>
       <Route path="*" element={<PageNotFound />} />
     </Routes>
