@@ -52,9 +52,9 @@ export default function PostComposer({ lang, currentUser, onPosted, onClose }) {
     if (!canPost || submitting) return;
     setSubmitting(true);
     await base44.entities.Post.create({
-      user_id: currentUser.id,
-      user_name: currentUser.full_name || "User",
-      user_avatar: currentUser.avatar_url || "",
+      user_id: currentUser?.id || "guest",
+      user_name: currentUser?.full_name || "Anonymous",
+      user_avatar: currentUser?.avatar_url || "",
       location_name: locationName.trim(),
       description: description.trim(),
       category: category || null,
@@ -100,9 +100,9 @@ export default function PostComposer({ lang, currentUser, onPosted, onClose }) {
         <div className="overflow-y-auto flex-1 p-5 space-y-4">
           {/* User + Location header */}
           <div className="flex gap-3">
-            <Avatar name={currentUser?.full_name} src={currentUser?.avatar_url} size={44} />
+            <Avatar name={currentUser?.full_name || "Anonymous"} src={currentUser?.avatar_url} size={44} />
             <div className="flex-1">
-              <p className="text-sm font-semibold text-foreground mb-2">{currentUser?.full_name || "User"}</p>
+              <p className="text-sm font-semibold text-foreground mb-2">{currentUser?.full_name || "Anonymous"}</p>
               <div className="relative">
                 <MapPin className="absolute start-3 top-1/2 -translate-y-1/2 w-4 h-4 text-primary" />
                 <input

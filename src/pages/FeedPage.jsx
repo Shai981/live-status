@@ -293,7 +293,7 @@ export default function FeedPage() {
 
       {/* FAB */}
       <button
-        onClick={() => currentUser ? setShowComposer(true) : base44.auth.redirectToLogin()}
+        onClick={() => setShowComposer(true)}
         className="fixed bottom-6 end-6 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-40"
       >
         <Plus className="w-7 h-7" strokeWidth={2.5} />
