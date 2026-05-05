@@ -3,11 +3,9 @@ import { base44 } from "@/api/base44Client";
 import { detectLanguage, t, RTL_LANGUAGES, CATEGORIES } from "@/lib/i18n";
 import PostCard from "@/components/social/PostCard";
 import PostComposer from "@/components/social/PostComposer";
-import StatusRequestComposer from "@/components/social/StatusRequestComposer";
-import StatusRequestCard from "@/components/social/StatusRequestCard";
 import Avatar from "@/components/social/Avatar";
 import LanguageSelector from "@/components/social/LanguageSelector";
-import { Plus, Search, Bell, Zap, SlidersHorizontal, TrendingUp, HelpCircle } from "lucide-react";
+import { Plus, Search, Bell, Zap, SlidersHorizontal, TrendingUp } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -18,9 +16,7 @@ export default function FeedPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showComposer, setShowComposer] = useState(false);
-  const [feedTab, setFeedTab] = useState("all"); // all | following | requests
-  const [showRequestComposer, setShowRequestComposer] = useState(false);
-  const [requests, setRequests] = useState([]);
+  const [feedTab, setFeedTab] = useState("all"); // all | following
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState(null);
   const [filterStatus, setFilterStatus] = useState(null);
@@ -55,12 +51,10 @@ export default function FeedPage() {
     setLoading(true);
     const me = await base44.auth.me().catch(() => null);
     setCurrentUser(me);
-    const [fetchedPosts, fetchedRequests] = await Promise.all([
+    const [fetchedPosts] = await Promise.all([
       base44.entities.Post.filter({ is_hidden: false }, "-created_date", 80),
-      base44.entities.StatusRequest.list("-created_date", 50),
     ]);
     setPosts(fetchedPosts.filter((p) => !p.is_hidden));
-    setRequests(fetchedRequests);
     if (me) {
       const [followList, notifs] = await Promise.all([
         base44.entities.Follow.filter({ follower_id: me.id }),
@@ -126,14 +120,6 @@ export default function FeedPage() {
             onClose={() => setShowComposer(false)}
           />
         )}
-        {showRequestComposer && (
-          <StatusRequestComposer
-            lang={lang}
-            currentUser={currentUser}
-            onPosted={loadData}
-            onClose={() => setShowRequestComposer(false)}
-          />
-        )}
       </AnimatePresence>
 
       {/* Top bar */}
@@ -171,20 +157,16 @@ export default function FeedPage() {
 
           {/* Feed tabs */}
           <div className="flex gap-1 mt-3 bg-secondary rounded-xl p-1">
-            {[
-              { id: "all", label: t(lang, "all") },
-              { id: "following", label: t(lang, "following") },
-              { id: "requests", label: <span className="flex items-center gap-1"><HelpCircle className="w-3.5 h-3.5" />{t(lang, "requests") || "Requests"}</span> },
-            ].map((tab) => (
+            {["all", "following"].map((tab) => (
               <button
-                key={tab.id}
-                onClick={() => setFeedTab(tab.id)}
+                key={tab}
+                onClick={() => setFeedTab(tab)}
                 className={cn(
-                  "flex-1 py-2 text-xs font-semibold rounded-lg transition-all",
-                  feedTab === tab.id ? "bg-card text-foreground shadow-sm" : "text-muted-foreground"
+                  "flex-1 py-2 text-sm font-semibold rounded-lg transition-all",
+                  feedTab === tab ? "bg-card text-foreground shadow-sm" : "text-muted-foreground"
                 )}
               >
-                {tab.label}
+                {tab === "all" ? t(lang, "all") : t(lang, "following")}
               </button>
             ))}
           </div>
@@ -284,26 +266,6 @@ export default function FeedPage() {
           <div className="space-y-4">
             {[1, 2, 3].map((i) => <div key={i} className="h-48 bg-card border border-border rounded-2xl animate-pulse" />)}
           </div>
-        ) : feedTab === "requests" ? (
-          requests.length === 0 ? (
-            <div className="text-center py-20">
-              <div className="text-5xl mb-3">🙋</div>
-              <p className="font-semibold text-foreground mb-1">{t(lang, "noRequests") || "No status requests yet"}</p>
-              <p className="text-sm text-muted-foreground">{t(lang, "beFirstRequest") || "Be the first to ask about a place!"}</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {requests.map((req) => (
-                <StatusRequestCard
-                  key={req.id}
-                  request={req}
-                  lang={lang}
-                  currentUser={currentUser}
-                  onReply={loadData}
-                />
-              ))}
-            </div>
-          )
         ) : filtered.length === 0 ? (
           <div className="text-center py-20">
             <div className="text-5xl mb-3">🌍</div>
@@ -330,21 +292,12 @@ export default function FeedPage() {
       </div>
 
       {/* FAB */}
-      {feedTab === "requests" ? (
-        <button
-          onClick={() => setShowRequestComposer(true)}
-          className="fixed bottom-6 end-6 w-14 h-14 rounded-full bg-amber-400 text-white shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-40"
-        >
-          <HelpCircle className="w-7 h-7" strokeWidth={2.5} />
-        </button>
-      ) : (
-        <button
-          onClick={() => setShowComposer(true)}
-          className="fixed bottom-6 end-6 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-40"
-        >
-          <Plus className="w-7 h-7" strokeWidth={2.5} />
-        </button>
-      )}
+      <button
+        onClick={() => setShowComposer(true)}
+        className="fixed bottom-6 end-6 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-40"
+      >
+        <Plus className="w-7 h-7" strokeWidth={2.5} />
+      </button>
     </div>
   );
 }
