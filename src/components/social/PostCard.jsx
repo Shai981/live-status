@@ -4,7 +4,7 @@ import { base44 } from "@/api/base44Client";
 import Avatar from "./Avatar";
 import MediaGallery from "./MediaGallery";
 import CommentThread from "./CommentThread";
-import { ThumbsUp, CheckCircle, Clock, Star, MessageCircle, Share2, MoreHorizontal, Trash2, Edit3, Flag } from "lucide-react";
+import { ThumbsUp, CheckCircle, Clock, Star, MessageCircle, Share2, MoreHorizontal, Trash2, Flag, HelpCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const STATUS_COLORS = {
@@ -136,7 +136,14 @@ export default function PostCard({ post, lang, currentUser, onDeleted, onUpdated
         </div>
 
         {/* LOCATION HEADER — mandatory, always dominant */}
-        <h2 className="text-xl font-extrabold text-foreground leading-snug mb-2">{localPost.location_name}</h2>
+        <div className="flex items-center gap-2 mb-2">
+          <h2 className="text-xl font-extrabold text-foreground leading-snug">{localPost.location_name}</h2>
+          {localPost.is_request && (
+            <span className="flex items-center gap-1 text-xs font-bold text-amber-600 bg-amber-100 dark:bg-amber-900/30 px-2.5 py-0.5 rounded-full shrink-0">
+              <HelpCircle className="w-3 h-3" /> Request
+            </span>
+          )}
+        </div>
 
         {/* Badges */}
         <div className="flex flex-wrap gap-1.5 mb-2">

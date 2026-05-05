@@ -59,6 +59,11 @@
         "type": "string"
       }
     },
+    "is_request": {
+      "type": "boolean",
+      "default": false,
+      "description": "True if this is a status request asking the community"
+    },
     "like_count": {
       "type": "number",
       "default": 0

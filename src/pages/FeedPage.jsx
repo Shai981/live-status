@@ -3,9 +3,10 @@ import { base44 } from "@/api/base44Client";
 import { detectLanguage, t, RTL_LANGUAGES, CATEGORIES } from "@/lib/i18n";
 import PostCard from "@/components/social/PostCard";
 import PostComposer from "@/components/social/PostComposer";
+import StatusRequestComposer from "@/components/social/StatusRequestComposer";
 import Avatar from "@/components/social/Avatar";
 import LanguageSelector from "@/components/social/LanguageSelector";
-import { Plus, Search, Bell, Zap, SlidersHorizontal, TrendingUp } from "lucide-react";
+import { Plus, Search, Bell, Zap, SlidersHorizontal, TrendingUp, HelpCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -16,6 +17,7 @@ export default function FeedPage() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [showComposer, setShowComposer] = useState(false);
+  const [showRequestComposer, setShowRequestComposer] = useState(false);
   const [feedTab, setFeedTab] = useState("all"); // all | following
   const [search, setSearch] = useState("");
   const [filterCategory, setFilterCategory] = useState(null);
@@ -118,6 +120,14 @@ export default function FeedPage() {
             currentUser={currentUser}
             onPosted={loadData}
             onClose={() => setShowComposer(false)}
+          />
+        )}
+        {showRequestComposer && (
+          <StatusRequestComposer
+            lang={lang}
+            currentUser={currentUser}
+            onPosted={loadData}
+            onClose={() => setShowRequestComposer(false)}
           />
         )}
       </AnimatePresence>
@@ -291,13 +301,22 @@ export default function FeedPage() {
         )}
       </div>
 
-      {/* FAB */}
-      <button
-        onClick={() => setShowComposer(true)}
-        className="fixed bottom-6 end-6 w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform z-40"
-      >
-        <Plus className="w-7 h-7" strokeWidth={2.5} />
-      </button>
+      {/* FABs */}
+      <div className="fixed bottom-6 end-6 flex flex-col items-end gap-3 z-40">
+        <button
+          onClick={() => setShowRequestComposer(true)}
+          className="flex items-center gap-2 px-4 h-12 rounded-full bg-amber-400 text-white shadow-xl hover:scale-105 active:scale-95 transition-transform"
+        >
+          <HelpCircle className="w-5 h-5" strokeWidth={2.5} />
+          <span className="text-sm font-bold">Ask</span>
+        </button>
+        <button
+          onClick={() => setShowComposer(true)}
+          className="w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
+        >
+          <Plus className="w-7 h-7" strokeWidth={2.5} />
+        </button>
+      </div>
     </div>
   );
 }
