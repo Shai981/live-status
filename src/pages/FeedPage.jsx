@@ -6,7 +6,7 @@ import PostComposer from "@/components/social/PostComposer";
 import StatusRequestComposer from "@/components/social/StatusRequestComposer";
 import Avatar from "@/components/social/Avatar";
 import LanguageSelector from "@/components/social/LanguageSelector";
-import { Plus, Search, Bell, Zap, SlidersHorizontal, TrendingUp, HelpCircle } from "lucide-react";
+import { Search, Bell, Zap, SlidersHorizontal, TrendingUp, MapPin, MessageCircleQuestion } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { cn } from "@/lib/utils";
@@ -307,14 +307,15 @@ export default function FeedPage() {
           onClick={() => setShowRequestComposer(true)}
           className="flex items-center gap-2 px-4 h-12 rounded-full bg-amber-400 text-white shadow-xl hover:scale-105 active:scale-95 transition-transform"
         >
-          <HelpCircle className="w-5 h-5" strokeWidth={2.5} />
+          <MessageCircleQuestion className="w-5 h-5" strokeWidth={2} />
           <span className="text-sm font-bold">Ask</span>
         </button>
         <button
           onClick={() => setShowComposer(true)}
-          className="w-14 h-14 rounded-full bg-primary text-primary-foreground shadow-xl flex items-center justify-center hover:scale-105 active:scale-95 transition-transform"
+          className="flex items-center gap-2 px-5 h-14 rounded-full bg-primary text-primary-foreground shadow-xl hover:scale-105 active:scale-95 transition-transform"
         >
-          <Plus className="w-7 h-7" strokeWidth={2.5} />
+          <MapPin className="w-5 h-5" strokeWidth={2} />
+          <span className="text-sm font-bold">Post Status</span>
         </button>
       </div>
     </div>
