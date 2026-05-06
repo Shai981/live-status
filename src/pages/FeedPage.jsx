@@ -308,7 +308,7 @@ export default function FeedPage() {
           className="flex items-center gap-2 px-4 h-12 rounded-full bg-amber-400 text-white shadow-xl hover:scale-105 active:scale-95 transition-transform"
         >
           <MessageCircleQuestion className="w-5 h-5" strokeWidth={2} />
-          <span className="text-sm font-bold">Ask</span>
+          <span className="text-sm font-bold">Ask Status</span>
         </button>
         <button
           onClick={() => setShowComposer(true)}
