@@ -21,6 +21,14 @@ const REACTIONS = [
   { key: "wow", IconComp: Star, label: "wow", countKey: "wow_count", color: "hover:text-purple-500" },
 ];
 
+const STATUS_VOTES = [
+  { key: "vote_busy",    label: "Busy",    countKey: "vote_busy_count",    emoji: "🔴", activeClass: "bg-red-100 text-red-600 border-red-300 font-semibold",     hoverClass: "hover:bg-red-50 hover:text-red-500" },
+  { key: "vote_crowded", label: "Crowded", countKey: "vote_crowded_count", emoji: "🟠", activeClass: "bg-orange-100 text-orange-600 border-orange-300 font-semibold", hoverClass: "hover:bg-orange-50 hover:text-orange-500" },
+  { key: "vote_moderate",label: "Moderate",countKey: "vote_moderate_count",emoji: "🟡", activeClass: "bg-yellow-100 text-yellow-600 border-yellow-300 font-semibold", hoverClass: "hover:bg-yellow-50 hover:text-yellow-500" },
+  { key: "vote_light",   label: "Light",   countKey: "vote_light_count",   emoji: "🟢", activeClass: "bg-green-100 text-green-600 border-green-300 font-semibold",  hoverClass: "hover:bg-green-50 hover:text-green-500" },
+  { key: "vote_empty",   label: "Empty",   countKey: "vote_empty_count",   emoji: "⚪", activeClass: "bg-blue-100 text-blue-600 border-blue-300 font-semibold",    hoverClass: "hover:bg-blue-50 hover:text-blue-500" },
+];
+
 export default function PostCard({ post, lang, currentUser, onDeleted, onUpdated, userReactions = {} }) {
   const [showComments, setShowComments] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -180,18 +188,55 @@ export default function PostCard({ post, lang, currentUser, onDeleted, onUpdated
         )}
 
         {/* Reaction bar */}
-        <div className="flex items-center justify-between mt-4 pt-3 border-t border-border">
+        <div className="mt-4 pt-3 border-t border-border space-y-2">
+          {/* Row 1: Comment + Status votes */}
           <div className="flex items-center gap-1 flex-wrap">
-            {REACTIONS.map(({ key, IconComp, label, countKey, color }) => {
+            {/* Comment first */}
+            <button
+              onClick={() => setShowComments((o) => !o)}
+              className={`flex items-center gap-1 text-xs px-2 py-1.5 rounded-xl transition-all ${showComments ? "bg-primary/10 text-primary font-semibold" : "text-muted-foreground hover:bg-secondary hover:text-primary"}`}
+            >
+              <MessageCircle className="w-3.5 h-3.5" strokeWidth={showComments ? 2.5 : 1.5} />
+              <span>Comment</span>
+              {localPost.comment_count > 0 && <span className="font-bold">{localPost.comment_count}</span>}
+            </button>
+
+            {/* Status votes */}
+            {STATUS_VOTES.map(({ key, label, countKey, activeClass, hoverClass, emoji }) => {
               const active = localReactions[key];
               return (
                 <button
                   key={key}
                   onClick={() => handleReact(key, countKey)}
-                  className={`flex items-center gap-1 text-xs px-2 py-1.5 rounded-xl transition-all ${
-                    active
-                      ? "bg-primary/10 text-primary font-semibold"
-                      : `text-muted-foreground hover:bg-secondary ${color}`
+                  className={`flex items-center gap-1 text-xs px-2 py-1.5 rounded-xl border transition-all ${
+                    active ? activeClass : `border-transparent text-muted-foreground ${hoverClass}`
+                  }`}
+                >
+                  <span>{emoji}</span>
+                  <span className="font-medium">{label}</span>
+                  {localPost[countKey] > 0 && <span className="font-bold">{localPost[countKey]}</span>}
+                </button>
+              );
+            })}
+
+            {/* Share */}
+            <button
+              onClick={handleShare}
+              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary px-2 py-1.5 rounded-xl hover:bg-secondary transition-all"
+            >
+              <Share2 className="w-3.5 h-3.5" />
+              {shared && <span className="text-green-600 text-[10px]">✓</span>}
+            </button>
+
+            {/* Like at the end */}
+            {REACTIONS.filter(r => r.key === "like").map(({ key, IconComp, label, countKey, color }) => {
+              const active = localReactions[key];
+              return (
+                <button
+                  key={key}
+                  onClick={() => handleReact(key, countKey)}
+                  className={`flex items-center gap-1 text-xs px-2 py-1.5 rounded-xl transition-all ms-auto ${
+                    active ? "bg-primary/10 text-primary font-semibold" : `text-muted-foreground hover:bg-secondary ${color}`
                   }`}
                 >
                   <IconComp className="w-3.5 h-3.5" strokeWidth={active ? 2.5 : 1.5} />
@@ -200,22 +245,6 @@ export default function PostCard({ post, lang, currentUser, onDeleted, onUpdated
                 </button>
               );
             })}
-          </div>
-          <div className="flex items-center gap-1">
-            <button
-              onClick={() => setShowComments((o) => !o)}
-              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary px-2 py-1.5 rounded-xl hover:bg-secondary transition-all"
-            >
-              <MessageCircle className="w-3.5 h-3.5" />
-              {localPost.comment_count > 0 && <span>{localPost.comment_count}</span>}
-            </button>
-            <button
-              onClick={handleShare}
-              className="flex items-center gap-1 text-xs text-muted-foreground hover:text-primary px-2 py-1.5 rounded-xl hover:bg-secondary transition-all"
-            >
-              <Share2 className="w-3.5 h-3.5" />
-              {shared && <span className="text-green-600 text-[10px]">✓</span>}
-            </button>
           </div>
         </div>
 

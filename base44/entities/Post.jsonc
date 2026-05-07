@@ -80,6 +80,26 @@
       "type": "number",
       "default": 0
     },
+    "vote_busy_count": {
+      "type": "number",
+      "default": 0
+    },
+    "vote_crowded_count": {
+      "type": "number",
+      "default": 0
+    },
+    "vote_moderate_count": {
+      "type": "number",
+      "default": 0
+    },
+    "vote_light_count": {
+      "type": "number",
+      "default": 0
+    },
+    "vote_empty_count": {
+      "type": "number",
+      "default": 0
+    },
     "comment_count": {
       "type": "number",
       "default": 0

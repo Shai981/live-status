@@ -14,7 +14,12 @@
         "like",
         "accurate",
         "outdated",
-        "wow"
+        "wow",
+        "vote_busy",
+        "vote_crowded",
+        "vote_moderate",
+        "vote_light",
+        "vote_empty"
       ]
     }
   },
