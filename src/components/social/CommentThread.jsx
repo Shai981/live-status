@@ -72,21 +72,11 @@ export default function CommentThread({ postId, postUserId, lang, currentUser })
     return (
       <div className="mt-2 flex flex-wrap gap-2">
         {urls.map((url, i) => (
-          <div key={i} className="relative rounded-xl overflow-hidden max-w-[200px]">
+          <div key={i} className="relative rounded-xl overflow-hidden">
             {types[i] === "video" ? (
-              <video
-                src={url}
-                controls
-                className="rounded-xl max-h-40 max-w-full"
-                style={{ maxWidth: 200 }}
-              />
+              <video src={url} controls className="rounded-xl max-h-40" style={{ maxWidth: 200 }} />
             ) : (
-              <img
-                src={url}
-                alt="media"
-                className="rounded-xl object-cover max-h-40"
-                style={{ maxWidth: 200 }}
-              />
+              <img src={url} alt="media" className="rounded-xl object-cover max-h-40" style={{ maxWidth: 200 }} />
             )}
           </div>
         ))}
@@ -132,22 +122,18 @@ export default function CommentThread({ postId, postUserId, lang, currentUser })
 
       {currentUser && (
         <div className="mt-3 space-y-2">
-          {/* Media previews */}
           {mediaUrls.length > 0 && (
             <div className="flex flex-wrap gap-2 ps-10">
               {mediaUrls.map((url, i) => (
                 <div key={i} className="relative rounded-xl overflow-hidden">
                   {mediaTypes[i] === "video" ? (
-                    <div className="relative w-20 h-16 bg-black rounded-xl flex items-center justify-center">
+                    <div className="w-20 h-16 bg-black rounded-xl flex items-center justify-center">
                       <Play className="w-6 h-6 text-white" />
                     </div>
                   ) : (
                     <img src={url} alt="preview" className="w-20 h-16 object-cover rounded-xl" />
                   )}
-                  <button
-                    onClick={() => removeMedia(i)}
-                    className="absolute top-0.5 end-0.5 w-5 h-5 rounded-full bg-black/60 text-white flex items-center justify-center"
-                  >
+                  <button onClick={() => removeMedia(i)} className="absolute top-0.5 end-0.5 w-5 h-5 rounded-full bg-black/60 text-white flex items-center justify-center">
                     <X className="w-3 h-3" />
                   </button>
                 </div>
@@ -155,7 +141,6 @@ export default function CommentThread({ postId, postUserId, lang, currentUser })
             </div>
           )}
 
-          {/* Input row */}
           <div className="flex gap-2 items-end">
             <Avatar name={currentUser.full_name} src={currentUser.avatar_url} size={32} />
             <div className="flex-1 bg-secondary rounded-2xl px-3 py-2 space-y-1.5">
@@ -178,29 +163,17 @@ export default function CommentThread({ postId, postUserId, lang, currentUser })
                     onChange={(e) => [...e.target.files].slice(0, 4 - mediaUrls.length).forEach((f) => uploadMedia(f, "image"))} />
                   <input ref={videoRef} type="file" accept="video/*" className="hidden"
                     onChange={(e) => e.target.files[0] && uploadMedia(e.target.files[0], "video")} />
-                  <button
-                    onClick={() => photoRef.current?.click()}
-                    disabled={uploading || mediaUrls.length >= 4}
-                    className="text-muted-foreground hover:text-primary transition-colors disabled:opacity-40"
-                    title="Add photo"
-                  >
+                  <button onClick={() => photoRef.current?.click()} disabled={uploading || mediaUrls.length >= 4}
+                    className="text-muted-foreground hover:text-primary transition-colors disabled:opacity-40" title="Add photo">
                     <Camera className="w-4 h-4" />
                   </button>
-                  <button
-                    onClick={() => videoRef.current?.click()}
-                    disabled={uploading || mediaTypes.includes("video")}
-                    className="text-muted-foreground hover:text-primary transition-colors disabled:opacity-40"
-                    title="Add video"
-                  >
+                  <button onClick={() => videoRef.current?.click()} disabled={uploading || mediaTypes.includes("video")}
+                    className="text-muted-foreground hover:text-primary transition-colors disabled:opacity-40" title="Add video">
                     <Video className="w-4 h-4" />
                   </button>
                   {uploading && <span className="text-[10px] text-muted-foreground">Uploading…</span>}
                 </div>
-                <button
-                  onClick={submit}
-                  disabled={!canSubmit}
-                  className="text-primary disabled:opacity-40 transition-opacity"
-                >
+                <button onClick={submit} disabled={!canSubmit} className="text-primary disabled:opacity-40 transition-opacity">
                   <Send className="w-4 h-4" />
                 </button>
               </div>
